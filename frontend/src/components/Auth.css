@@ -89,3 +89,38 @@
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 30px 25px;
+    max-width: 100%;
+    margin: 0 15px;
+  }
+
+  .auth-card h1 {
+    font-size: 24px;
+  }
+
+  .form-group input {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 15px;
+  }
+
+  .auth-card {
+    padding: 25px 20px;
+  }
+
+  .auth-card h1 {
+    font-size: 22px;
+  }
+
+  .btn-primary {
+    padding: 10px;
+  }
+}

@@ -1,5 +1,6 @@
 const { Server } = require('socket.io');
 const { socketAuth } = require('../middleware/auth');
+const socketRateLimiter = require('../middleware/socketRateLimiter');
 const User = require('../models/User');
 const Room = require('../models/Room');
 const Message = require('../models/Message');
@@ -145,6 +146,15 @@ class SocketService {
 
   async handleSendMessage(socket, { roomId, content, replyTo }) {
     try {
+      // Check rate limit
+      const limitCheck = socketRateLimiter.checkLimit(socket.userId, 'messages');
+      if (!limitCheck.allowed) {
+        return socket.emit('error', {
+          message: `Rate limit exceeded. Please wait ${limitCheck.retryAfter} seconds.`,
+          retryAfter: limitCheck.retryAfter
+        });
+      }
+
       const room = await Room.findById(roomId);
 
       if (!room) {
@@ -207,6 +217,12 @@ class SocketService {
   }
 
   async handleTypingStart(socket, { roomId }) {
+    // Check rate limit for typing
+    const limitCheck = socketRateLimiter.checkLimit(socket.userId, 'typing');
+    if (!limitCheck.allowed) {
+      return; // Silently ignore excessive typing events
+    }
+
     socket.to(roomId).emit('user_typing', {
       roomId,
       user: {

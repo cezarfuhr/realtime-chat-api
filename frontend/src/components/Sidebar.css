@@ -173,3 +173,83 @@
   color: #999;
   text-transform: capitalize;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-header {
+    padding: 15px;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .avatar-placeholder {
+    font-size: 16px;
+  }
+
+  .user-details h3 {
+    font-size: 14px;
+  }
+
+  .btn-logout {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .rooms-header {
+    padding: 15px;
+  }
+
+  .rooms-header h2 {
+    font-size: 18px;
+  }
+
+  .create-room-form {
+    padding: 0 15px 15px;
+  }
+
+  .room-item {
+    padding: 12px 15px;
+  }
+
+  .room-avatar {
+    width: 42px;
+    height: 42px;
+  }
+
+  .room-info h4 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-details {
+    display: none;
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rooms-header h2 {
+    font-size: 16px;
+  }
+}

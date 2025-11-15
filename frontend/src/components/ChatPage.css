@@ -32,3 +32,16 @@
   color: #666;
   font-size: 16px;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .chat-page {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-container p {
+    font-size: 14px;
+  }
+}

@@ -11,6 +11,7 @@ const connectDB = require('./config/database');
 const { initRedis } = require('./config/redis');
 const SocketService = require('./services/socketService');
 const errorHandler = require('./middleware/errorHandler');
+const { apiLimiter } = require('./middleware/rateLimiter');
 const logger = require('./utils/logger');
 
 // Import routes
@@ -37,6 +38,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files (uploads)
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// Apply rate limiting to all API routes
+app.use('/api', apiLimiter);
 
 // Health check
 app.get('/health', (req, res) => {

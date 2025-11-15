@@ -26,7 +26,10 @@
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
     "compression": "^1.7.4",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "express-rate-limit": "^7.1.5",
+    "rate-limit-redis": "^4.2.0",
+    "sharp": "^0.33.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",

@@ -2,6 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const roomController = require('../controllers/roomController');
 const { authenticate } = require('../middleware/auth');
+const { createRoomLimiter } = require('../middleware/rateLimiter');
 const validate = require('../middleware/validate');
 
 const router = express.Router();
@@ -23,7 +24,7 @@ const createRoomValidation = [
 router.use(authenticate);
 
 // Routes
-router.post('/', createRoomValidation, roomController.createRoom);
+router.post('/', createRoomLimiter, createRoomValidation, roomController.createRoom);
 router.get('/', roomController.getRooms);
 router.get('/:id', roomController.getRoomById);
 router.put('/:id', roomController.updateRoom);

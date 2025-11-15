@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './services/authStore';
 
+import ErrorBoundary from './components/ErrorBoundary';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import ChatPage from './components/ChatPage';
@@ -17,23 +18,29 @@ function PrivateRoute({ children }) {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <ChatPage />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-        <Toaster position="top-right" />
-      </BrowserRouter>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/login" element={<ErrorBoundary><LoginPage /></ErrorBoundary>} />
+              <Route path="/register" element={<ErrorBoundary><RegisterPage /></ErrorBoundary>} />
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <ErrorBoundary>
+                      <ChatPage />
+                    </ErrorBoundary>
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+            <Toaster position="top-right" />
+          </ErrorBoundary>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
